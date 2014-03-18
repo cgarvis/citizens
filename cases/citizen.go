@@ -1,6 +1,7 @@
 package cases
 
 type Citizen struct {
-    UID     string
-    secret  []byte
+    UID             string
+    Secret          string
+    encryptedSecret []byte
 }

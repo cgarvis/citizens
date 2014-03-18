@@ -12,22 +12,31 @@ func TestUpdateCitizen(t *testing.T) {
 
     Convey("Update Citizen", t, func() {
         Store = NewMemoryStore()
-        Store.SaveCitizen(Citizen{"sue@example.com", []byte("my secret")})
+        Store.SaveCitizen(Citizen{UID:"sue@example.com", encryptedSecret:[]byte("my secret")})
         citizen, _ := Store.FetchCitizenByUID("sue@example.com")
 
         Convey("with new secret", func() {
             attributes := Citizen{
                 UID: "sue@example.com",
-                secret: []byte("super secret"),
+                encryptedSecret: []byte("super secret"),
             }
             updatedCitizen, err := UpdateCitizen(attributes.UID, attributes)
 
             So(err, ShouldBeNil)
-            So(citizen.UID, ShouldEqual, updatedCitizen.UID)
-            So(citizen.secret, ShouldNotEqual, updatedCitizen.secret)
+            So(updatedCitizen.UID, ShouldEqual, citizen.UID)
+            So(updatedCitizen.encryptedSecret, ShouldNotEqual, citizen.encryptedSecret)
         })
 
         Convey("with new uid", func() {
+            attributes := Citizen{
+                UID: "joe@example.com",
+                encryptedSecret: []byte("super secret"),
+            }
+            updatedCitizen, err := UpdateCitizen("sue@example.com", attributes)
+
+            So(err, ShouldBeNil)
+            So(updatedCitizen.UID, ShouldEqual, "joe@example.com")
+            So(updatedCitizen.encryptedSecret, ShouldEqual, citizen.encryptedSecret)
         })
     })
 }

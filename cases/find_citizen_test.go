@@ -20,7 +20,7 @@ func TestFindCitizen(t *testing.T) {
         Convey("when exists", func() {
             uid := "find@citizen.com"
 
-            if err := Store.SaveCitizen(Citizen{uid, []byte("Secret")}); err != nil {
+            if err := Store.SaveCitizen(Citizen{UID:uid, encryptedSecret:[]byte("Secret")}); err != nil {
                 panic("Creating a citizen for find citizens failed")
             }
 

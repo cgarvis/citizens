@@ -10,7 +10,7 @@ func TestFindCitizens(t *testing.T) {
 
     Convey("Find Citizens", t, func() {
         Convey("when exists", func() {
-            if err := Store.SaveCitizen(Citizen{"1234567890", []byte("Secret")}); err != nil {
+            if err := Store.SaveCitizen(Citizen{UID:"1234567890", encryptedSecret:[]byte("Secret")}); err != nil {
                 panic("Creating a citizen for find citizens failed")
             }
 

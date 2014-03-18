@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 )
 
@@ -45,7 +44,8 @@ func createHttpHandler() http.Handler {
             r.JSON(http.StatusOK, response)
 		}
 	})
-	m.Patch("/v1/citizens/:id", binding.Json(Citizen{}), func(params martini.Params, attributes Citizen, r render.Render) {
+
+	m.Patch("/v1/citizens/:uid", binding.Json(Citizen{}), func(params martini.Params, attributes Citizen, r render.Render) {
 	    if citizen, err := cases.UpdateCitizen(params["uid"], attributes.to()); err != nil {
 	        r.JSON(http.StatusBadRequest, err)
 	    } else {
@@ -54,6 +54,7 @@ func createHttpHandler() http.Handler {
 	        r.JSON(http.StatusOK, response)
 	    }
 	})
+
 	m.Get("/v1/citizens/:uid", func(params martini.Params, r render.Render) {
 	    if citizen, err := cases.FindCitizen(params["uid"]); err != nil {
 	        r.JSON(http.StatusBadRequest, err)
@@ -64,7 +65,7 @@ func createHttpHandler() http.Handler {
 	    }
 	})
 
-	m.Post("/v1/identify", func(params martini.Params) (int, string) {
+	m.Put("/v1/identify", func(params martini.Params) (int, string) {
 		if token, err := cases.LoginCitizen(params["uid"], params["secret"]); err != nil {
 			return http.StatusInternalServerError, ""
 		} else {

@@ -22,8 +22,8 @@ func TestCreateCitizen(t *testing.T) {
 
             Convey("returns corrent citizen", func() {
                 So(citizen.UID, ShouldEqual, uid)
-                So(string(citizen.secret), ShouldNotEqual, "")
-                So(string(citizen.secret), ShouldNotEqual, secret)
+                So(string(citizen.encryptedSecret), ShouldNotEqual, "")
+                So(string(citizen.encryptedSecret), ShouldNotEqual, secret)
             })
         })
 

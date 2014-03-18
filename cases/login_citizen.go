@@ -15,7 +15,7 @@
         return "", errors.New("Citizen not found")
     }
 
-    if !entities.CompareSecret(citizen.secret, []byte(plain_secret)) {
+    if !entities.CompareSecret(citizen.encryptedSecret, []byte(plain_secret)) {
         return "", errors.New("Secret does not match")
     }
 

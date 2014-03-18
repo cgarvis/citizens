@@ -13,7 +13,7 @@ func TestLoginCitizen(t *testing.T) {
         secret := "my secret"
         encrypted := []byte("$2a$10$mA7yxta9XDomJUBKhNpVkuNeImkeOrl0h9TfGZBbohJqOa7qqCFX6")
 
-        Store.SaveCitizen(Citizen{uid, encrypted})
+        Store.SaveCitizen(Citizen{UID:uid, encryptedSecret:encrypted})
 
         Convey("with valid uid and secret", func() {
             jwt, err := LoginCitizen(uid, secret)

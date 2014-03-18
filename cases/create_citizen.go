@@ -20,7 +20,7 @@ func CreateCitizen (uid, secret string) (Citizen, error) {
     }
 
     citizen.UID = uid
-    citizen.secret = entities.EncryptSecret([]byte(secret))
+    citizen.encryptedSecret = entities.EncryptSecret([]byte(secret))
 
     if err := Store.SaveCitizen(citizen); err != nil {
         return citizen, fmt.Errorf("There was a problem saving citizen")

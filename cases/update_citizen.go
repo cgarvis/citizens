@@ -8,7 +8,14 @@ func UpdateCitizen(uid string, attributes Citizen) (Citizen, error) {
     var citizen Citizen
 
     if citizen, ok := Store.FetchCitizenByUID(uid); ok {
-        citizen.secret = entities.EncryptSecret(attributes.secret)
+        if attributes.Secret != "" {
+            citizen.encryptedSecret = entities.EncryptSecret([]byte(attributes.Secret))
+        }
+
+        if attributes.UID != "" {
+            citizen.UID = attributes.UID
+        }
+
         Store.SaveCitizen(citizen)
         return citizen, nil
     }
